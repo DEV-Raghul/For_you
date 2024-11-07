@@ -53,6 +53,7 @@
 <body>
   <h1 id="heading">Do you Love me?</h1>
   <h1 id="heading1">😍</h1>
+  <a href="https://www.instagram.com/mr_flying_fluorite?igsh=MXdqcGUxNjlsOG5uNA%3D%3D&utm_source=qr"></a>
   <img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJ0b2Ztdjh6MXNlMTVzZXZuaGd4bG9vYnhyMXV3aDM0MWZ3OHRoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Placeholder Image">
   <div>
   <button id="yesButton">Yes</button>
@@ -65,6 +66,7 @@
     const noButton = document.getElementById('noButton');
     const heading = document.getElementById('heading');
     const heading1 = document.getElementById('heading1');
+    const heading2 = document.getElementById('heading1');
     const image = document.getElementById('image');
     
     function moveButton() {
@@ -78,6 +80,7 @@
     yesButton.addEventListener('click', () => {
       heading.textContent = "Hehe, I knew it!😊";
       heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you alot 🥰";
+      heading2.textContent = "Click Me..!";
       image.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXE0aWZlaDM3bnlqamZma3drcGU1MzVzc3FwMmt2c3E1bDQyYnA2dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bA5cblwksWXDOwSzUI/giphy.gif";
       yesButton.style.display = "none";
       noButton.style.display = "none";// Change image source if desired
@@ -85,7 +88,7 @@
     
     noButton.addEventListener('click', () => {
       heading.textContent = "Sorry that you didn't like the image!";
-      heading.textContent = "😅";
+      heading1.textContent = "😅";
       image.src = "https://via.placeholder.com/150"; // Reset image source if desired
     });
   </script>
