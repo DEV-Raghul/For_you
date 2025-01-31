@@ -15,49 +15,49 @@
         height: 100vh;
         background-color: lightpink;
         flex-direction: column;
-        position: relative;
     }
+
     h1, h2 {
         text-align: center;
     }
+
     img {
         width: 200px;
         height: auto;
         margin-top: 20px;
     }
+
     #yesButton, #noButton {
         background: white;
         padding: 8px 16px;
         border: none;
         border-radius: 5px;
-        cursor: pointer;
-        position: relative;
     }
 </style>
 </head>
 <body>
 
-<h1 id="heading">Do you love me?😊</h1>
-<h2 id="subheading">Please say yes!</h2>
-<img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmNzZTFsMWlmNWNqYjVuN2IxaTA0aGp3ZG13ZGc3MDh3aHdkMzFuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Placeholder Image">
-<br>
+<h1>Do you love me? 😊</h1>
+<h2>Please say yes!</h2>
 <button id="yesButton">Yes</button>
-<button id="noButton" onmouseover="moveButton()">No</button>
+<button id="noButton">No</button>
+<img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJ0b2Ztdjh6MXNlMTVzZXZuaGd4bG9vYnhyMXV3aDM0MWZ3OHRoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Placeholder Image">
 
 <script>
     let clickCount = 0;
+    
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
-    const heading = document.getElementById('heading');
-    const subheading = document.getElementById('subheading');
+    const heading = document.querySelector('h1');
+    const subheading = document.querySelector('h2');
     const image = document.getElementById('image');
 
     const imageUrls = [
-        'https://media.giphy.com/media/gDfteqLchLcRTtjAD7/giphy.gif',
-        'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/giphy.gif',
-        'https://media.giphy.com/media/eiRpSPB8OSGVcbkOIJ/giphy.gif',
-        'https://media.giphy.com/media/3o6gDZ9unSrDk3EuR2/giphy.gif',
-        'https://media.giphy.com/media/9X8UlqKhaSPz4n7BkW/giphy.gif'
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWZsMDB1dGI5N2djNjk4OHE4bDRudzd6YmIzZ3IyY2oxaGczZTZwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gDfteqLchLcRTtjAD7/giphy.gif',
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTltY3oxb2hxa3g1bmQ1cmthYm5lcnBpMWM1ZWdpbXhtaWFobTRjOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/M90mJvfWfd5mbUuULX/giphy.gif',
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWg4Y3Frc3locThqN3Z0OTUzN2dyZHQxY3F3Ym92bzFnN3RycHE5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eiRpSPB8OSGVcbkOIJ/giphy.gif',
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG54c3J1cXNybThtb2VycGpmbW5paHppcDB0Z2Njd2xxMjN3MXJoMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6gDZ9unSrDk3EuR2/giphy.gif',
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVzZ3U1N2JodG1rMTU5dHVhOHYzM3liaDF3eDR1eGJ1N3YweWgyYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9X8UlqKhaSPz4n7BkW/giphy.gif'
     ];
 
     function moveButton() {
@@ -70,23 +70,16 @@
 
     noButton.addEventListener('click', () => {
         clickCount++;
-        if (clickCount < 5) {
-            heading.textContent = "In a world full of uncertainties, you're my constant.";
-            subheading.textContent = `Click \"yes\".`;
+        if (clickCount < imageUrls.length) {
             image.src = imageUrls[clickCount];
         }
-        if (clickCount === 4) {
-            heading.textContent = "How about now?";
-            subheading.textContent = `Please click \"Yes\" now.`;
-            noButton.style.display = "none";
-            yesButton.style.display = "inline-block";
-        }
+        moveButton();
     });
 
     yesButton.addEventListener('click', () => {
         heading.textContent = "Hehe I knew it!";
-        subheading.textContent = "I love you ❤️";
-        image.src = "https://media.giphy.com/media/bA5cblwksWXDOwSzUI/giphy.gif";
+        subheading.textContent = "I love you";
+        image.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGM3MW92Zms4a3ZtamxibnZidHB1d3FoMWVzdmE3bzhxZWppaWN2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bA5cblwksWXDOwSzUI/giphy.gif";
         yesButton.style.display = "none";
         noButton.style.display = "none";
     });
