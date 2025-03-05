@@ -114,7 +114,8 @@
         }
         if (clickCount < emoji.length) {
             emoji.change = emoji[clickCount]
-            heading1.textContent = emoji.change
+            heading.textContent = '';
+            heading1.textContent = emoji.change;
         }
         moveButton();
     });
