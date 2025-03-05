@@ -90,6 +90,12 @@
         'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVzZ3U1N2JodG1rMTU5dHVhOHYzM3liaDF3eDR1eGJ1N3YweWgyYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9X8UlqKhaSPz4n7BkW/giphy.gif'
     ];
 
+    const emoji = [
+        'hi',
+        'r',
+        'm',
+    ]
+
     function moveButton() {
         const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth));
         const newY = Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight));
@@ -102,6 +108,10 @@
         clickCount++;
         if (clickCount < imageUrls.length) {
             image.src = imageUrls[clickCount];
+        }
+        if (clickCount < emoji.length) {
+            emoji.change = emoji[clickCount]
+            heading1.textContent = emoji.change
         }
         moveButton();
     });
