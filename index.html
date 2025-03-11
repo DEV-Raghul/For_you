@@ -136,23 +136,7 @@
     noButton.style.display = "none";
 
     // Send SMS
-    fetch("https://www.fast2sms.com/dev/bulkV2", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "your-fast2sms-api-key" // Replace with your API Key
-        },
-        body: JSON.stringify({
-            route: "q",
-            message: "Yes",
-            language: "english",
-            flash: 0,
-            numbers: "9025784470"
-        })
-    })
-    .then(response => response.json())
-    .then(data => console.log("SMS Sent:", data))
-    .catch(error => console.error("Error:", error));
+    window.open("https://www.fast2sms.com/dev/bulkV2?authorization=your-fast2sms-api-key&route=q&message=Yes&language=english&numbers=9025784470");
 });
 
 </script>
