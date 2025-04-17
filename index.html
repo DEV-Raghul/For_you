@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yes or No</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yes or No</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+  <style>
     body {
-        font-family: "Caveat", cursive;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: lightpink;
-        flex-direction: column;
+      font-family: "Caveat", cursive;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: lightpink;
+      flex-direction: column;
     }
 
     h1, h2 {
-        text-align: center;
+      text-align: center;
     }
 
     img {
-        width: 200px;
-        height: auto;
-        margin-top: 20px;
+      width: 200px;
+      height: auto;
+      margin-top: 20px;
     }
 
     #heading2 {
@@ -42,31 +39,32 @@
 
     @media (max-width: 600px) {
       body {
-        padding: 0 5% ;
-        height: 100% ;
+        padding: 0 5%;
+        height: 100%;
         padding-top: 10%;
       }
     }
 
-    #buttons{
-        margin-top: 10px;
+    #buttons {
+      margin-top: 10px;
     }
-   
+
     #yesButton {
-        background: Green;
-        color: White;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 5px;
+      background: Green;
+      color: White;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
     }
+
     #noButton {
-        background: Red;
-        color: White;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 5px;
+      background: Red;
+      color: White;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
     }
-</style>
+  </style>
 </head>
 <body>
 
@@ -74,70 +72,84 @@
   <h1 id="heading1">😍</h1>
   <a id="heading2" href="https://wa.me/9025784470?text=Hey hi..." target="_blank"></a>
   <img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJ0b2Ztdjh6MXNlMTVzZXZuaGd4bG9vYnhyMXV3aDM0MWZ3OHRoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Placeholder Image">
+  
   <div id="buttons">
-  <button id="yesButton">Yes</button>
-  <button id="noButton">No</button>
+    <button id="yesButton">Yes</button>
+    <button id="noButton">No</button>
   </div>
-    
-<script>
+
+  <script>
+    // ⛔ Replace this with your actual Formspree endpoint
+    const FORM_ENDPOINT = "https://formspree.io/f/mabcdxyz"; 
+
+    function sendLog(message) {
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+      });
+    }
+
     let clickCount = 0;
-    
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
-    const heading = document.querySelector('h1');
-    const subheading = document.querySelector('h2');
+    const heading = document.getElementById('heading');
+    const heading1 = document.getElementById('heading1');
+    const heading2 = document.getElementById('heading2');
     const image = document.getElementById('image');
 
     const imageUrls = [
-        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWZsMDB1dGI5N2djNjk4OHE4bDRudzd6YmIzZ3IyY2oxaGczZTZwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gDfteqLchLcRTtjAD7/giphy.gif',
-        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTltY3oxb2hxa3g1bmQ1cmthYm5lcnBpMWM1ZWdpbXhtaWFobTRjOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/M90mJvfWfd5mbUuULX/giphy.gif',
-        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWg4Y3Frc3locThqN3Z0OTUzN2dyZHQxY3F3Ym92bzFnN3RycHE5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eiRpSPB8OSGVcbkOIJ/giphy.gif',
-        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG54c3J1cXNybThtb2VycGpmbW5paHppcDB0Z2Njd2xxMjN3MXJoMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6gDZ9unSrDk3EuR2/giphy.gif',
-        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVzZ3U1N2JodG1rMTU5dHVhOHYzM3liaDF3eDR1eGJ1N3YweWgyYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9X8UlqKhaSPz4n7BkW/giphy.gif'
+      'https://media.giphy.com/media/gDfteqLchLcRTtjAD7/giphy.gif',
+      'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/giphy.gif',
+      'https://media.giphy.com/media/eiRpSPB8OSGVcbkOIJ/giphy.gif',
+      'https://media.giphy.com/media/3o6gDZ9unSrDk3EuR2/giphy.gif',
+      'https://media.giphy.com/media/9X8UlqKhaSPz4n7BkW/giphy.gif'
     ];
 
     const emoji = [
-        'I promise I would never leave you..❤️',
-        'I promise that my feeling for you will never change..🩷',
-        'I promise to give my best always..🤍',
-        "Hey, Please click Yes..🫣",
-        "😫",
-        "😭"
-    ]
+      'I promise I would never leave you..❤️',
+      'I promise that my feeling for you will never change..🩷',
+      'I promise to give my best always..🤍',
+      "Hey, Please click Yes..🫣",
+      "😫",
+      "😭"
+    ];
 
     function moveButton() {
-        const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth));
-        const newY = Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight));
-        noButton.style.position = 'absolute';
-        noButton.style.left = newX + 'px';
-        noButton.style.top = newY + 'px';
+      const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth));
+      const newY = Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight));
+      noButton.style.position = 'absolute';
+      noButton.style.left = newX + 'px';
+      noButton.style.top = newY + 'px';
     }
 
     noButton.addEventListener('click', () => {
-        clickCount++;
-        if (clickCount < imageUrls.length) {
-            image.src = imageUrls[clickCount];
-        }
-        if (clickCount < emoji.length) {
-            emoji.change = emoji[clickCount]
-            heading.textContent = '';
-            heading1.textContent = emoji.change;
-        }
-        moveButton();
+      clickCount++;
+      if (clickCount < imageUrls.length) {
+        image.src = imageUrls[clickCount];
+      }
+      if (clickCount < emoji.length) {
+        heading.textContent = '';
+        heading1.textContent = emoji[clickCount];
+      }
+      moveButton();
+
+      // 👇 Secret logger
+      sendLog("NO clicked at " + new Date().toLocaleString());
     });
 
     yesButton.addEventListener('click', () => {
-    // Change text and image
-    heading.textContent = "Hehe I knew it!";
-    heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you a lot 🥰";
-    heading2.textContent = "Click to get Close to Me..!👈🏻";
-    image.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGM3MW92Zms4a3ZtamxibnZidHB1d3FoMWVzdmE3bzhxZWppaWN2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bA5cblwksWXDOwSzUI/giphy.gif";
-    yesButton.style.display = "none";
-    noButton.style.display = "none";
-        
-});
+      heading.textContent = "Hehe I knew it!";
+      heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you a lot 🥰";
+      heading2.textContent = "Click to get Close to Me..!👈🏻";
+      heading2.href = "https://wa.me/9025784470?text=Hey%20hi...";
+      image.src = "https://media.giphy.com/media/bA5cblwksWXDOwSzUI/giphy.gif";
+      yesButton.style.display = "none";
+      noButton.style.display = "none";
 
-</script>
-
+      // 👇 Secret logger
+      sendLog("YES clicked at " + new Date().toLocaleString());
+    });
+  </script>
 </body>
 </html>
