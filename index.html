@@ -84,22 +84,29 @@
       max-width: 90%;
       max-height: 90%;
     }
+
+    #mainContent.hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <h1 id="heading">I am here to travel with you from today until the last minute of my life, will you marry me?</h1>
-  <h1 id="heading1">😍</h1>
-  <a id="heading2" href="https://wa.me/9025784470?text=Hey hi..." target="_blank"></a>
-  <img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJ0b2Ztdjh6MXNlMTVzZXZuaGd4bG9vYnhyMXV3aDM0MWZ3OHRoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Love gif">
+  <!-- Wrap all main content here -->
+  <div id="mainContent">
+    <h1 id="heading">I am here to travel with you from today until the last minute of my life, will you marry me?</h1>
+    <h1 id="heading1">😍</h1>
+    <a id="heading2" href="https://wa.me/9025784470?text=Hey hi..." target="_blank"></a>
+    <img id="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGJ0b2Ztdjh6MXNlMTVzZXZuaGd4bG9vYnhyMXV3aDM0MWZ3OHRoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Love gif">
 
-  <div id="buttons">
-    <button id="yesButton">Yes</button>
-    <button id="noButton">No</button>
+    <div id="buttons">
+      <button id="yesButton">Yes</button>
+      <button id="noButton">No</button>
+    </div>
   </div>
 
-  <!-- Hidden Form (auto-submit on script) -->
-  <form id="logForm" action="https://formspree.io/f/yourFormID" method="POST" style="display:none;">
+  <!-- Hidden Form for silent message -->
+  <form id="logForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display:none;">
     <input type="hidden" name="message" id="formMessage">
   </form>
 
@@ -121,6 +128,7 @@
     const popupImage = document.getElementById('popupImage');
     const form = document.getElementById('logForm');
     const formMessage = document.getElementById('formMessage');
+    const mainContent = document.getElementById('mainContent');
 
     const imageUrls = [
       'https://media.giphy.com/media/gDfteqLchLcRTtjAD7/giphy.gif',
@@ -156,17 +164,18 @@
     }
 
     function showPopupGif(gifUrl) {
+      mainContent.classList.add('hidden');
       popupImage.src = gifUrl;
       popupGif.classList.add('show');
       setTimeout(() => {
         popupGif.classList.remove('show');
         popupImage.src = '';
+        mainContent.classList.remove('hidden');
       }, 4000);
     }
 
     function sendSilentMessage(message) {
       formMessage.value = message;
-
       fetch(form.action, {
         method: 'POST',
         headers: {
@@ -186,10 +195,9 @@
         heading1.textContent = emoji[clickCount];
       }
       if (clickCount < nogif.length) {
-       showPopupGif( nogif[clickCount] );
+        showPopupGif(nogif[clickCount]);
       }
       moveButton();
-      // showPopupGif('https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif');
       sendSilentMessage('No button clicked');
     });
 
