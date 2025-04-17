@@ -69,13 +69,13 @@
 
     /* Popup GIF styling */
     #popupGif {
-      display: none;
+      display: none;  /* Initially hidden */
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.6); /* Transparent dark background */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -145,10 +145,10 @@
 
     function showPopupGif(gifUrl) {
       popupImage.src = gifUrl;
-      popupGif.style.display = 'flex';
+      popupGif.style.display = 'flex'; // Show the popup
       setTimeout(() => {
-        popupGif.style.display = 'none';
-        popupImage.src = '';
+        popupGif.style.display = 'none'; // Hide after 4 seconds
+        popupImage.src = ''; // Clear the image
       }, 4000);
     }
 
