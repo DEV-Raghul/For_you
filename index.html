@@ -138,6 +138,14 @@
       "😫",
       "😭"
     ];
+    const nogif = [
+      showPopupGif('https://media.tenor.com/utpiwBr_FakAAAAC/broken-heart.gif');,
+      showPopupGif('https://c.tenor.com/vE53w74cIPcAAAAM/manga-toon.gif');,
+      showPopupGif('https://c.tenor.com/g1_tS_VU14YAAAAM/tears-heartbreak.gif');,
+      showPopupGif('https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif');,
+      showPopupGif('https://media.tenor.com/kelz1ItMNeMAAAAC/love.gif');,
+      showPopupGif('https://media.tenor.com/EqCHrhlrv6cAAAAC/love-broken-heart.gif');
+    ];
 
     function moveButton() {
       const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth));
@@ -177,8 +185,11 @@
         heading.textContent = '';
         heading1.textContent = emoji[clickCount];
       }
+      if (clickCount < nogif.length) {
+        image.src = emoji[clickCount];
+      }
       moveButton();
-      showPopupGif('https://gifdb.com/images/high/breaking-broken-heart-4rhyxw5xc8slosp4.gif');
+      // showPopupGif('https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif');
       sendSilentMessage('No button clicked');
     });
 
