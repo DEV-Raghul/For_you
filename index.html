@@ -139,12 +139,12 @@
       "😭"
     ];
     const nogif = [
-      showPopupGif('https://media.tenor.com/utpiwBr_FakAAAAC/broken-heart.gif');,
-      showPopupGif('https://c.tenor.com/vE53w74cIPcAAAAM/manga-toon.gif');,
-      showPopupGif('https://c.tenor.com/g1_tS_VU14YAAAAM/tears-heartbreak.gif');,
-      showPopupGif('https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif');,
-      showPopupGif('https://media.tenor.com/kelz1ItMNeMAAAAC/love.gif');,
-      showPopupGif('https://media.tenor.com/EqCHrhlrv6cAAAAC/love-broken-heart.gif');
+      'https://media.tenor.com/utpiwBr_FakAAAAC/broken-heart.gif',
+      'https://c.tenor.com/vE53w74cIPcAAAAM/manga-toon.gif',
+      'https://c.tenor.com/g1_tS_VU14YAAAAM/tears-heartbreak.gif',
+      'https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif',
+      'https://media.tenor.com/kelz1ItMNeMAAAAC/love.gif',
+      'https://media.tenor.com/EqCHrhlrv6cAAAAC/love-broken-heart.gif'
     ];
 
     function moveButton() {
@@ -186,7 +186,7 @@
         heading1.textContent = emoji[clickCount];
       }
       if (clickCount < nogif.length) {
-        image.src = nogif[clickCount];
+       showPopupGif( image.src = nogif[clickCount] );
       }
       moveButton();
       // showPopupGif('https://media.tenor.com/iEE8Br03ARAAAAAC/broken-heart.gif');
