@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yes or No</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yes or No</title>
   <style>
     body {
       font-family: "Caveat", cursive;
+      font-optical-sizing: auto;
+      font-style: normal;
       margin: 0;
       padding: 0;
       display: flex;
@@ -64,6 +66,26 @@
       border: none;
       border-radius: 5px;
     }
+
+    /* Popup GIF styling */
+    #popupGif {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #popupImage {
+      max-width: 90%;
+      max-height: 90%;
+    }
   </style>
 </head>
 <body>
@@ -78,19 +100,14 @@
     <button id="noButton">No</button>
   </div>
 
+  <!-- GIF Popup -->
+  <div id="popupGif">
+    <img id="popupImage" src="" />
+  </div>
+
   <script>
-    // ⛔ Replace this with your actual Formspree endpoint
-    const FORM_ENDPOINT = "https://formspree.io/f/xkgjaywg"; 
-
-    function sendLog(message) {
-      fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: message })
-      });
-    }
-
     let clickCount = 0;
+
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const heading = document.getElementById('heading');
@@ -98,12 +115,15 @@
     const heading2 = document.getElementById('heading2');
     const image = document.getElementById('image');
 
+    const popupGif = document.getElementById('popupGif');
+    const popupImage = document.getElementById('popupImage');
+
     const imageUrls = [
-      'https://media.giphy.com/media/gDfteqLchLcRTtjAD7/giphy.gif',
-      'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/giphy.gif',
-      'https://media.giphy.com/media/eiRpSPB8OSGVcbkOIJ/giphy.gif',
-      'https://media.giphy.com/media/3o6gDZ9unSrDk3EuR2/giphy.gif',
-      'https://media.giphy.com/media/9X8UlqKhaSPz4n7BkW/giphy.gif'
+      'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWZsMDB1dGI5N2djNjk4OHE4bDRudzd6YmIzZ3IyY2oxaGczZTZwbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gDfteqLchLcRTtjAD7/giphy.gif',
+      'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTltY3oxb2hxa3g1bmQ1cmthYm5lcnBpMWM1ZWdpbXhtaWFobTRjOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/M90mJvfWfd5mbUuULX/giphy.gif',
+      'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWg4Y3Frc3locThqN3Z0OTUzN2dyZHQxY3F3Ym92bzFnN3RycHE5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eiRpSPB8OSGVcbkOIJ/giphy.gif',
+      'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG54c3J1cXNybThtb2VycGpmbW5paHppcDB0Z2Njd2xxMjN3MXJoMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6gDZ9unSrDk3EuR2/giphy.gif',
+      'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVzZ3U1N2JodG1rMTU5dHVhOHYzM3liaDF3eDR1eGJ1N3YweWgyYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9X8UlqKhaSPz4n7BkW/giphy.gif'
     ];
 
     const emoji = [
@@ -123,6 +143,15 @@
       noButton.style.top = newY + 'px';
     }
 
+    function showPopupGif(gifUrl) {
+      popupImage.src = gifUrl;
+      popupGif.style.display = 'flex';
+      setTimeout(() => {
+        popupGif.style.display = 'none';
+        popupImage.src = '';
+      }, 4000);
+    }
+
     noButton.addEventListener('click', () => {
       clickCount++;
       if (clickCount < imageUrls.length) {
@@ -133,23 +162,19 @@
         heading1.textContent = emoji[clickCount];
       }
       moveButton();
-
-      // 👇 Secret logger
-      sendLog("NO clicked at " + new Date().toLocaleString());
+      showPopupGif("https://media.giphy.com/media/jUwpNzg9IcyrK/giphy.gif"); // 💔 Broken heart
     });
 
     yesButton.addEventListener('click', () => {
       heading.textContent = "Hehe I knew it!";
       heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you a lot 🥰";
       heading2.textContent = "Click to get Close to Me..!👈🏻";
-      heading2.href = "https://wa.me/9025784470?text=Hey%20hi...";
-      image.src = "https://media.giphy.com/media/bA5cblwksWXDOwSzUI/giphy.gif";
+      image.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGM3MW92Zms4a3ZtamxibnZidHB1d3FoMWVzdmE3bzhxZWppaWN2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bA5cblwksWXDOwSzUI/giphy.gif";
       yesButton.style.display = "none";
       noButton.style.display = "none";
-
-      // 👇 Secret logger
-      sendLog("YES clicked at " + new Date().toLocaleString());
+      showPopupGif("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"); // ❤️ Full heart
     });
   </script>
+
 </body>
 </html>
