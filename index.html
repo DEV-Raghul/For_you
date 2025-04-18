@@ -114,7 +114,7 @@
   </div>
 
   <!-- Hidden Form for silent message -->
-  <form id="logForm" action="https://formspree.io/f/xkgjaywg" method="POST" style="display:none;">
+  <form id="logForm" action="https://formspree.io/f/xkgjayw1" method="POST" style="display:none;">
     <input type="hidden" name="message" id="formMessage">
   </form>
 
@@ -209,16 +209,32 @@
       sendSilentMessage('No button clicked');
     });
 
-    yesButton.addEventListener('click', () => {
+    const loveSong = new Audio('https://example.com/vazhithunaiye.mp3'); 
+     loveSong.loop = true; 
+
+     yesButton.addEventListener('click', () => {
       heading.textContent = "Hehe I knew it!";
       heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you a lot 🥰";
       heading2.textContent = "Click to get Close to Me..!👈🏻";
       image.src = "https://media.giphy.com/media/bA5cblwksWXDOwSzUI/giphy.gif";
       yesButton.style.display = "none";
       noButton.style.display = "none";
-      showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
-      sendSilentMessage('Yes button clicked');
-    });
+    showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
+    sendSilentMessage('Yes button clicked');
+
+  
+  loveSong.play().catch((err) => {
+    console.log('Autoplay failed:', err);
+  });
+});
+
+
+document.addEventListener('click', (event) => {
+  if (!yesButton.contains(event.target)) {
+    loveSong.pause();
+    loveSong.currentTime = 0; 
+  }
+}, { once: true });
   </script>
 </body>
 </html>
