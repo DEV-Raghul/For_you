@@ -85,6 +85,12 @@
       max-height: 90%;
     }
 
+    #song {
+      display: none; /* Hide initially */
+      color: white;
+    }
+
+
     #mainContent {
       display: flex;
       flex-direction: column;
@@ -176,9 +182,6 @@
     function showPopupGif(gifUrl) {
       mainContent.classList.add('hidden');
       popupImage.src = gifUrl;
-      yesButton.addEventListener('click', () => {
-        song;
-      });
       popupGif.classList.add('show');
       setTimeout(() => {
         popupGif.classList.remove('show');
@@ -224,6 +227,7 @@
       image.src = "https://media.giphy.com/media/bA5cblwksWXDOwSzUI/giphy.gif";
       yesButton.style.display = "none";
       noButton.style.display = "none";
+      song.style.display = 'block';
     showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
     sendSilentMessage('Yes button clicked');
 
