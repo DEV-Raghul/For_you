@@ -121,6 +121,7 @@
   <!-- Popup for GIF -->
   <div id="popupGif">
     <img id="popupImage" src="" alt="popup gif" />
+    <h1 id="song">Song For you ❤️</h1>
   </div>
 
   <script>
@@ -131,6 +132,7 @@
     const heading = document.getElementById('heading');
     const heading1 = document.getElementById('heading1');
     const heading2 = document.getElementById('heading2');
+    const song = document.getElementById('song');
     const image = document.getElementById('image');
     const popupGif = document.getElementById('popupGif');
     const popupImage = document.getElementById('popupImage');
@@ -174,6 +176,7 @@
     function showPopupGif(gifUrl) {
       mainContent.classList.add('hidden');
       popupImage.src = gifUrl;
+      song;
       popupGif.classList.add('show');
       setTimeout(() => {
         popupGif.classList.remove('show');
