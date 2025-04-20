@@ -104,16 +104,6 @@
     #mainContent.hidden {
       display: none;
     }
-
-    canvas.confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100% !important;
-      height: 100% !important;
-      pointer-events: none;
-      z-index: 9999;
-    }
   </style>
 </head>
 <body>
@@ -140,8 +130,8 @@
     <img id="popupImage" src="" alt="popup gif" />
   </div>
 
-  <!-- Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- js-confetti (emoji confetti) -->
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 
   <script>
     let clickCount = 0;
@@ -189,6 +179,8 @@
     const loveSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3');
     loveSong.loop = true;
 
+    const jsConfetti = new JSConfetti();
+
     function moveButton() {
       const padding = 60;
       const newX = Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth - padding));
@@ -221,29 +213,11 @@
     }
 
     function launchConfetti() {
-      const duration = 3 * 1000;
-      const animationEnd = Date.now() + duration;
-
-      const interval = setInterval(() => {
-        if (Date.now() > animationEnd) {
-          clearInterval(interval);
-          return;
-        }
-
-        confetti({
-          particleCount: 10,
-          startVelocity: 30,
-          spread: 360,
-          ticks: 100,
-          origin: {
-            x: Math.random(),
-            y: Math.random() * 0.6
-          },
-          shapes: ['text'],
-          scalar: 1.8,
-          emojis: ['💖', '❤️', '💕', '😍', '💘']
-        });
-      }, 200);
+      jsConfetti.addConfetti({
+        emojis: ['💖', '❤️', '💕', '😍', '💘'],
+        emojiSize: 50,
+        confettiNumber: 80
+      });
     }
 
     noButton.addEventListener('click', () => {
