@@ -221,11 +221,29 @@
     }
 
     function launchConfetti() {
-      confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.6 }
-      });
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      const interval = setInterval(() => {
+        if (Date.now() > animationEnd) {
+          clearInterval(interval);
+          return;
+        }
+
+        confetti({
+          particleCount: 10,
+          startVelocity: 30,
+          spread: 360,
+          ticks: 100,
+          origin: {
+            x: Math.random(),
+            y: Math.random() * 0.6
+          },
+          shapes: ['text'],
+          scalar: 1.8,
+          emojis: ['💖', '❤️', '💕', '😍', '💘']
+        });
+      }, 200);
     }
 
     noButton.addEventListener('click', () => {
@@ -262,7 +280,6 @@
       }
     });
 
-    // Stop the song when clicking anywhere else (once)
     document.addEventListener('click', (event) => {
       if (!yesButton.contains(event.target) && !noButton.contains(event.target)) {
         loveSong.pause();
@@ -270,7 +287,6 @@
       }
     });
 
-    // Stop the song when it reaches the end
     loveSong.addEventListener('ended', () => {
       loveSong.pause();
       loveSong.currentTime = 0;
