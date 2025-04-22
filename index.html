@@ -121,7 +121,7 @@
   </div>
 
   <!-- Hidden Form -->
-  <form id="logForm" action="https://formspree.io/f/xkgjaywg" method="POST" style="display:none;">
+  <form id="logForm" action="https://formspree.io/f/xkgjayw1" method="POST" style="display:none;">
     <input type="hidden" name="message" id="formMessage">
   </form>
 
@@ -136,6 +136,7 @@
   <script>
     let clickCount = 0;
     let hasPlayedSong = false;
+    let hasPlayedSong1 = false;
 
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
@@ -179,6 +180,9 @@
     const loveSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3');
     loveSong.loop = true;
 
+    const NoSong = new Audio('./song/Vizhiyil-Un-Vizhiyil.mp3');
+    NoSong.loop = true;
+    
     const jsConfetti = new JSConfetti();
 
     function moveButton() {
@@ -232,6 +236,10 @@
       if (clickCount < nogif.length) {
         showPopupGif(nogif[clickCount]);
       }
+       if (!hasPlayedSong1) {
+        NoSong.play().catch(console.log);
+        hasPlayedSong1 = true;
+      }
       moveButton();
       sendSilentMessage('No button clicked');
     });
@@ -264,6 +272,18 @@
     loveSong.addEventListener('ended', () => {
       loveSong.pause();
       loveSong.currentTime = 0;
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!yesButton.contains(event.target) && !noButton.contains(event.target)) {
+        NoSong.pause();
+        NoSong.currentTime = 0;
+      }
+    });
+
+    NoSong.addEventListener('ended', () => {
+      NoSong.pause();
+      NoSong.currentTime = 0;
     });
   </script>
 </body>
