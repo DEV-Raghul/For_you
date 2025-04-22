@@ -228,6 +228,10 @@
       clickCount++;
       if (clickCount < imageUrls.length) {
         image.src = imageUrls[clickCount];
+         if (!hasPlayedSong1) {
+        NoSong.play().catch(console.log);
+        hasPlayedSong1 = true;
+      }
       }
       if (clickCount < emoji.length) {
         heading.textContent = '';
@@ -236,10 +240,7 @@
       if (clickCount < nogif.length) {
         showPopupGif(nogif[clickCount]);
       }
-       if (!hasPlayedSong1) {
-        NoSong.play().catch(console.log);
-        hasPlayedSong1 = true;
-      }
+      
       moveButton();
       sendSilentMessage('No button clicked');
     });
