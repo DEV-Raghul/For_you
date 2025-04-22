@@ -228,11 +228,12 @@
       clickCount++;
       if (clickCount < imageUrls.length) {
         image.src = imageUrls[clickCount];
-         if (!hasPlayedSong1) {
-        NoSong.play().catch(console.log);
-        hasPlayedSong1 = true;
       }
-      }
+      
+      NoSong.pause();
+      NoSong.currentTime = 0;
+      NoSong.play().catch(console.log);
+
       if (clickCount < emoji.length) {
         heading.textContent = '';
         heading1.textContent = emoji[clickCount];
