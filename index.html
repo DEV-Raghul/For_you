@@ -258,6 +258,8 @@
       launchConfetti();
       sendSilentMessage('Yes button clicked');
 
+      NoSong.pause();
+      
       if (!hasPlayedSong) {
         loveSong.play().catch(console.log);
         hasPlayedSong = true;
